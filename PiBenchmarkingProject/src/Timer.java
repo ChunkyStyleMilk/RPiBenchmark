@@ -6,33 +6,34 @@ public class Timer {
     private static long startTime = System.currentTimeMillis();
     private static int currentSecond = 1;
 
-        public static void startTimer(){
+    public Timer(){
 
-            System.out.println("Starting Timer...");
+    }
 
-            while(System.currentTimeMillis() - startTime < duration) {
+    public void startTimer(){
 
-                if((System.currentTimeMillis() - startTime) / 1000 == currentSecond) {
+        System.out.println("Starting Timer...");
 
-                    System.out.println(currentSecond);
-                    currentSecond++;
+        while(System.currentTimeMillis() - startTime < duration) {
 
-                }
+            if((System.currentTimeMillis() - startTime) / 1000 == currentSecond) {
+
+                System.out.println(currentSecond);
+                currentSecond++;
+
             }
-
-            System.out.println("Done!");
-
         }
+    }
 
-        public static boolean isDone(){
+    public boolean isDone(){
 
-            return System.currentTimeMillis() - startTime >= duration;
+        return System.currentTimeMillis() - startTime >= duration;
 
-        }
-        public static void resetTimer(){
+    }
+    public void resetTimer(){
 
-            startTime = System.currentTimeMillis();
-            currentSecond = 1;
+        startTime = System.currentTimeMillis();
+        currentSecond = 1;
 
-        }
+    }
 }

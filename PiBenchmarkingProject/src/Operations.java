@@ -4,33 +4,35 @@ public class Operations {
     private static int doubleCounter = 0;
     private static int stringCounter = 0;
 
-    public static int integerOps(){
-        Timer.resetTimer();
-        while(!Timer.isDone()){
+    public static int integerOps() {
+
+        long endTime = System.currentTimeMillis() + 5000;
+        while(System.currentTimeMillis() < endTime) {
 
             int benchy = 5+5;
             intCounter++;
 
         }
-        Timer.resetTimer();
         return intCounter;
     }
 
     public static int doubleOps(){
 
-        while(!Timer.isDone()){
+        long endTime = System.currentTimeMillis() + 5000;
+        while(System.currentTimeMillis() < endTime) {
 
-            double benchy = 235.023958 + 985.54902;
+            double benchy = 5.023958 + 5.54902;
             doubleCounter++;
 
         }
-        Timer.resetTimer();
+
         return doubleCounter;
     }
 
     public static int stringOps(){
 
-        while(!Timer.isDone()){
+        long endTime = System.currentTimeMillis() + 5000;
+        while(System.currentTimeMillis() < endTime) {
 
             String first = "Hello";
             String second = "World!";
@@ -38,7 +40,6 @@ public class Operations {
             stringCounter++;
 
         }
-        Timer.resetTimer();
         return stringCounter;
     }
 
