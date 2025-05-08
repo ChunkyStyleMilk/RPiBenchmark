@@ -3,65 +3,60 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
 
-        int sInteger = 0;
-        int sDouble = 0;
-        int sString = 0;
-
-        int mInteger = 0;
-        int mDouble = 0;
-        int mString = 0;
+        TemperatureMonitor monitor = new TemperatureMonitor(500);
 
         System.out.println("Initializing Single-Thread Processing...");
-        for(int i = 0; i < 3; i++){
 
-            if(i == 0){
+        monitor.start();
 
-                sInteger = Operations.integerOps();
+        long sInteger = Operations.integerOps();
+        long sDouble = Operations.doubleOps();
+        long sString = Operations.stringOps();
 
-            }else if(i == 1){
+        long mInteger = 0;
+        long mDouble = 0;
+        long mString = 0;
 
-                sDouble = Operations.doubleOps();
+        monitor.stop();
+        double maxTemp = monitor.getMaxTemp();
 
-            }else{
-
-                sString = Operations.stringOps();
-
-            }
-        }
-
-        System.out.println("Finalizing Single-Thread Processing...");
+        BenchmarkResult sResult = new BenchmarkResult(sInteger, sDouble, sString, maxTemp);
 
         System.out.println("Initializing Multi-Thread Processing...");
 
-        MultiThreadOperations threadOne = new MultiThreadOperations(1);
-        MultiThreadOperations threadTwo = new MultiThreadOperations(2);
-        MultiThreadOperations threadThree = new MultiThreadOperations(3);
+        monitor = new TemperatureMonitor(500);
+        monitor.start();
 
-        Thread thread1 = new Thread(threadOne);
-        Thread thread2 = new Thread(threadTwo);
-        Thread thread3 = new Thread(threadThree);
+        MultiThreadOperations w1 = new MultiThreadOperations(1);
+        MultiThreadOperations w2 = new MultiThreadOperations(2);
+        MultiThreadOperations w3 = new MultiThreadOperations(3);
 
-        thread1.start();
-        thread2.start();
-        thread3.start();
+        Thread t1 = new Thread(w1, "Worker-1");
+        Thread t2 = new Thread(w2, "Worker-2");
+        Thread t3 = new Thread(w3, "Worker-3");
 
-        thread1.join();
-        thread2.join();
-        thread3.join();
+        t1.start();
+        t2.start();
+        t3.start();
 
+        t1.join();
+        t2.join();
+        t3.join();
 
-        mInteger = threadOne.getIntCounter() + threadTwo.getIntCounter() + threadThree.getIntCounter();
-        mDouble = threadOne.getDoubleCounter() + threadTwo.getDoubleCounter() + threadThree.getDoubleCounter();
-        mString = threadOne.getStringCounter() + threadTwo.getStringCounter() + threadThree.getStringCounter();
+        monitor.stop();
+        maxTemp = monitor.getMaxTemp();
 
-        printValues(sInteger, sDouble, sString, "Single Thread");
-        printValues(mInteger, mDouble, mString, "Multi Thread");
+        long totalInt    = w1.getIntCount()    + w2.getIntCount()    + w3.getIntCount();
+        long totalDouble = w1.getDoubleCount() + w2.getDoubleCount() + w3.getDoubleCount();
+        long totalString = w1.getStringCount() + w2.getStringCount() + w3.getStringCount();
 
-    }
+        BenchmarkResult mResult = new BenchmarkResult(totalInt, totalDouble, totalString, maxTemp);
 
-    public static void printValues(int iOne, int iTwo, int iThree, String type){
+        System.out.println("Single-Thread Results:");
+        System.out.println(sResult);
 
-        System.out.println("\n" + type + ":\nNumber of integer calculations: " + iOne + "\nNumber of double calculations: " + iTwo + "\nNumber of string concatenations: " + iThree);
+        System.out.println("Multi-Thread Results:");
+        System.out.println(mResult);
 
     }
 

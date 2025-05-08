@@ -1,46 +1,45 @@
 public class Operations {
 
-    private static int intCounter = 0;
-    private static int doubleCounter = 0;
-    private static int stringCounter = 0;
+    public static long integerOps() {
 
-    public static int integerOps() {
-
+        long counter = 0L;
         long endTime = System.currentTimeMillis() + 5000;
         while(System.currentTimeMillis() < endTime) {
 
             int benchy = 5+5;
-            intCounter++;
+            counter++;
 
         }
-        return intCounter;
+        return counter;
     }
 
-    public static int doubleOps(){
+    public static long doubleOps(){
 
+        long counter = 0L;
         long endTime = System.currentTimeMillis() + 5000;
         while(System.currentTimeMillis() < endTime) {
 
             double benchy = 5.023958 + 5.54902;
-            doubleCounter++;
+            counter++;
 
         }
 
-        return doubleCounter;
+        return counter;
     }
 
-    public static int stringOps(){
+    public static long stringOps(){
 
+        long counter = 0L;
         long endTime = System.currentTimeMillis() + 5000;
         while(System.currentTimeMillis() < endTime) {
 
             String first = "Hello";
             String second = "World!";
             String benchy = first.concat(second);
-            stringCounter++;
+            counter++;
 
         }
-        return stringCounter;
+        return counter;
     }
 
 }
