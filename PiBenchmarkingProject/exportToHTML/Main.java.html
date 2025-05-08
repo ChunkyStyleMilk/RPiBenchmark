@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>Main.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #bcbec4;}
+.s1 { color: #cf8e6d;}
+.s2 { color: #bcbec4;}
+.s3 { color: #2aacb8;}
+.s4 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Main.java</font>
+</center></td></tr></table>
+<pre>
+<span class="s1">public class </span><span class="s0">Main </span><span class="s2">{</span>
+
+    <span class="s1">public static void </span><span class="s0">main</span><span class="s2">(</span><span class="s0">String</span><span class="s2">[] </span><span class="s0">args</span><span class="s2">) </span><span class="s1">throws </span><span class="s0">InterruptedException </span><span class="s2">{</span>
+
+        <span class="s0">TemperatureMonitor monitor </span><span class="s2">= </span><span class="s1">new </span><span class="s0">TemperatureMonitor</span><span class="s2">(</span><span class="s3">500</span><span class="s2">);</span>
+
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s4">&quot;Initializing Single-Thread Processing...&quot;</span><span class="s2">);</span>
+
+        <span class="s0">monitor</span><span class="s2">.</span><span class="s0">start</span><span class="s2">();</span>
+
+        <span class="s1">long </span><span class="s0">sInteger </span><span class="s2">= </span><span class="s0">Operations</span><span class="s2">.</span><span class="s0">integerOps</span><span class="s2">();</span>
+        <span class="s1">long </span><span class="s0">sDouble </span><span class="s2">= </span><span class="s0">Operations</span><span class="s2">.</span><span class="s0">doubleOps</span><span class="s2">();</span>
+        <span class="s1">long </span><span class="s0">sString </span><span class="s2">= </span><span class="s0">Operations</span><span class="s2">.</span><span class="s0">stringOps</span><span class="s2">();</span>
+
+        <span class="s1">long </span><span class="s0">mInteger </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+        <span class="s1">long </span><span class="s0">mDouble </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+        <span class="s1">long </span><span class="s0">mString </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+
+        <span class="s0">monitor</span><span class="s2">.</span><span class="s0">stop</span><span class="s2">();</span>
+        <span class="s1">double </span><span class="s0">maxTemp </span><span class="s2">= </span><span class="s0">monitor</span><span class="s2">.</span><span class="s0">getMaxTemp</span><span class="s2">();</span>
+
+        <span class="s0">BenchmarkResult sResult </span><span class="s2">= </span><span class="s1">new </span><span class="s0">BenchmarkResult</span><span class="s2">(</span><span class="s0">sInteger</span><span class="s2">, </span><span class="s0">sDouble</span><span class="s2">, </span><span class="s0">sString</span><span class="s2">, </span><span class="s0">maxTemp</span><span class="s2">);</span>
+
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s4">&quot;Initializing Multi-Thread Processing...&quot;</span><span class="s2">);</span>
+
+        <span class="s0">monitor </span><span class="s2">= </span><span class="s1">new </span><span class="s0">TemperatureMonitor</span><span class="s2">(</span><span class="s3">500</span><span class="s2">);</span>
+        <span class="s0">monitor</span><span class="s2">.</span><span class="s0">start</span><span class="s2">();</span>
+
+        <span class="s0">MultiThreadOperations w1 </span><span class="s2">= </span><span class="s1">new </span><span class="s0">MultiThreadOperations</span><span class="s2">(</span><span class="s3">1</span><span class="s2">);</span>
+        <span class="s0">MultiThreadOperations w2 </span><span class="s2">= </span><span class="s1">new </span><span class="s0">MultiThreadOperations</span><span class="s2">(</span><span class="s3">2</span><span class="s2">);</span>
+        <span class="s0">MultiThreadOperations w3 </span><span class="s2">= </span><span class="s1">new </span><span class="s0">MultiThreadOperations</span><span class="s2">(</span><span class="s3">3</span><span class="s2">);</span>
+
+        <span class="s0">Thread t1 </span><span class="s2">= </span><span class="s1">new </span><span class="s0">Thread</span><span class="s2">(</span><span class="s0">w1</span><span class="s2">, </span><span class="s4">&quot;Worker-1&quot;</span><span class="s2">);</span>
+        <span class="s0">Thread t2 </span><span class="s2">= </span><span class="s1">new </span><span class="s0">Thread</span><span class="s2">(</span><span class="s0">w2</span><span class="s2">, </span><span class="s4">&quot;Worker-2&quot;</span><span class="s2">);</span>
+        <span class="s0">Thread t3 </span><span class="s2">= </span><span class="s1">new </span><span class="s0">Thread</span><span class="s2">(</span><span class="s0">w3</span><span class="s2">, </span><span class="s4">&quot;Worker-3&quot;</span><span class="s2">);</span>
+
+        <span class="s0">t1</span><span class="s2">.</span><span class="s0">start</span><span class="s2">();</span>
+        <span class="s0">t2</span><span class="s2">.</span><span class="s0">start</span><span class="s2">();</span>
+        <span class="s0">t3</span><span class="s2">.</span><span class="s0">start</span><span class="s2">();</span>
+
+        <span class="s0">t1</span><span class="s2">.</span><span class="s0">join</span><span class="s2">();</span>
+        <span class="s0">t2</span><span class="s2">.</span><span class="s0">join</span><span class="s2">();</span>
+        <span class="s0">t3</span><span class="s2">.</span><span class="s0">join</span><span class="s2">();</span>
+
+        <span class="s0">monitor</span><span class="s2">.</span><span class="s0">stop</span><span class="s2">();</span>
+        <span class="s0">maxTemp </span><span class="s2">= </span><span class="s0">monitor</span><span class="s2">.</span><span class="s0">getMaxTemp</span><span class="s2">();</span>
+
+        <span class="s1">long </span><span class="s0">totalInt    </span><span class="s2">= </span><span class="s0">w1</span><span class="s2">.</span><span class="s0">getIntCount</span><span class="s2">()    + </span><span class="s0">w2</span><span class="s2">.</span><span class="s0">getIntCount</span><span class="s2">()    + </span><span class="s0">w3</span><span class="s2">.</span><span class="s0">getIntCount</span><span class="s2">();</span>
+        <span class="s1">long </span><span class="s0">totalDouble </span><span class="s2">= </span><span class="s0">w1</span><span class="s2">.</span><span class="s0">getDoubleCount</span><span class="s2">() + </span><span class="s0">w2</span><span class="s2">.</span><span class="s0">getDoubleCount</span><span class="s2">() + </span><span class="s0">w3</span><span class="s2">.</span><span class="s0">getDoubleCount</span><span class="s2">();</span>
+        <span class="s1">long </span><span class="s0">totalString </span><span class="s2">= </span><span class="s0">w1</span><span class="s2">.</span><span class="s0">getStringCount</span><span class="s2">() + </span><span class="s0">w2</span><span class="s2">.</span><span class="s0">getStringCount</span><span class="s2">() + </span><span class="s0">w3</span><span class="s2">.</span><span class="s0">getStringCount</span><span class="s2">();</span>
+
+        <span class="s0">BenchmarkResult mResult </span><span class="s2">= </span><span class="s1">new </span><span class="s0">BenchmarkResult</span><span class="s2">(</span><span class="s0">totalInt</span><span class="s2">, </span><span class="s0">totalDouble</span><span class="s2">, </span><span class="s0">totalString</span><span class="s2">, </span><span class="s0">maxTemp</span><span class="s2">);</span>
+
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s4">&quot;Single-Thread Results:&quot;</span><span class="s2">);</span>
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s0">sResult</span><span class="s2">);</span>
+
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s4">&quot;Multi-Thread Results:&quot;</span><span class="s2">);</span>
+        <span class="s0">System</span><span class="s2">.</span><span class="s0">out</span><span class="s2">.</span><span class="s0">println</span><span class="s2">(</span><span class="s0">mResult</span><span class="s2">);</span>
+
+    <span class="s2">}</span>
+
+<span class="s2">}</span>
+
+</pre>
+</body>
+</html>

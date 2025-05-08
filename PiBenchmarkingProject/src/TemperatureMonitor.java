@@ -3,6 +3,7 @@ import java.io.InputStreamReader;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TemperatureMonitor implements Runnable {
+
     private final AtomicBoolean running = new AtomicBoolean(false);
     private double maxTemp = Double.MIN_VALUE;
     private final long sampleIntervalMs;
@@ -28,7 +29,7 @@ public class TemperatureMonitor implements Runnable {
     public void run() {
         while (running.get()) {
             try {
-                // Raspberry Pi-specific command:
+
                 ProcessBuilder pb = new ProcessBuilder("bash", "-c", "vcgencmd measure_temp");
                 Process p = pb.start();
 
