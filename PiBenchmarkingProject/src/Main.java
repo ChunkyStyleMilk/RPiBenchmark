@@ -3,9 +3,17 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
 
-        TemperatureMonitor monitor = new TemperatureMonitor(500);
+        final int   numWorkers = 3;
+        final long  warmUpMs    = 5_000;
+        final long  sampleIntvl = 500;
 
-        System.out.println("Initializing Single-Thread Processing...");
+        System.out.println(">>> Warming up CPU for " + (warmUpMs/1000) + " s...");
+        warmUpCores(numWorkers, warmUpMs);
+        System.out.println(">>> Warm-up complete. Starting benchmark.");
+
+        TemperatureMonitor monitor = new TemperatureMonitor(sampleIntvl);
+
+        System.out.println(">>> Initializing Single-Thread Processing...");
 
         monitor.start();
 
@@ -22,7 +30,7 @@ public class Main {
 
         BenchmarkResult sResult = new BenchmarkResult(sInteger, sDouble, sString, maxTemp);
 
-        System.out.println("Initializing Multi-Thread Processing...");
+        System.out.println(">>> Initializing Multi-Thread Processing...");
 
         monitor = new TemperatureMonitor(500);
         monitor.start();
@@ -60,5 +68,33 @@ public class Main {
 
     }
 
+    private static void warmUpCores(int numThreads, long durationMs) throws InterruptedException {
+
+        Runnable warmUpTask = () -> {
+
+            long end = System.currentTimeMillis() + durationMs;
+
+            while (System.currentTimeMillis() < end) {
+
+                int    a = 1, b = 2;      a += b;
+                double x = 1.5, y = 2.5;  x *= y;
+                String s = "Warm" + "Up";
+
+            }
+        };
+
+        Thread[] threads = new Thread[numThreads];
+
+        for (int i = 0; i < numThreads; i++) {
+
+            threads[i] = new Thread(warmUpTask, "WarmUp-" + (i + 1));
+            threads[i].start();
+
+        }
+
+        for (Thread t : threads) {
+            t.join();
+        }
+    }
 }
 
